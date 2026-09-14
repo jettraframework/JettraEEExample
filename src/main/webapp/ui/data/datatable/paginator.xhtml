@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PrimeFaces Showcase - DataTable Paginator</title>
+    <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"/>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; margin: 0; padding: 0; }
+        .topbar { background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+        .topbar-logo { display: flex; align-items: center; gap: 12px; font-size: 1.2rem; font-weight: 700; color: #4f46e5; text-decoration: none; }
+        .topbar-logo .badge-showcase { background: #e0e7ff; color: #4338ca; font-size: 0.75rem; padding: 2px 8px; border-radius: 9999px; font-weight: 600; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #475569; padding: 6px 14px; border-radius: 6px; font-size: 0.875rem; text-decoration: none; font-weight: 500; }
+        .nav-back:hover { background: #e2e8f0; color: #1e293b; }
+        .showcase-wrapper { display: flex; max-width: 1400px; margin: 1.5rem auto; padding: 0 1.5rem; gap: 2rem; }
+        .sidebar { width: 250px; flex-shrink: 0; background: #ffffff; border-radius: 10px; border: 1px solid #e2e8f0; padding: 1.25rem 0.75rem; height: fit-content; }
+        .sidebar-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #64748b; padding: 0 0.75rem 0.5rem; border-bottom: 1px solid #f1f5f9; letter-spacing: 0.05em; }
+        .sidebar-menu { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+        .sidebar-menu li a { display: block; padding: 0.55rem 0.75rem; border-radius: 6px; color: #334155; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+        .sidebar-menu li a:hover { background: #f1f5f9; color: #4f46e5; }
+        .sidebar-menu li a.active { background: #eef2ff; color: #4f46e5; font-weight: 600; }
+        .main-content { flex: 1; min-width: 0; }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; color: #64748b; margin-bottom: 1rem; }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .page-header { margin-bottom: 1.5rem; }
+        .page-header h1 { font-size: 1.85rem; font-weight: 700; color: #0f172a; margin: 0 0 0.5rem 0; }
+        .page-header h1 span.subitem { color: #6366f1; }
+        .page-header p { color: #64748b; margin: 0; font-size: 1rem; }
+        .card { background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 1.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); margin-bottom: 2rem; }
+        .card-header { font-size: 1.15rem; font-weight: 600; color: #1e293b; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+        .code-preview { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 1.25rem; font-family: monospace; font-size: 0.85rem; overflow-x: auto; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="/index.xhtml" class="topbar-logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            PrimeFaces Showcase <span class="badge-showcase">JettraEE • Jakarta EE</span>
+        </a>
+        <a href="/index.xhtml" class="nav-back">&#8592; Volver al Portal</a>
+    </div>
+
+    <div class="showcase-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-title">DataTable Demos</div>
+            <ul class="sidebar-menu">
+                <li><a href="/ui/data/datatable/basic.xhtml">📌 Basic</a></li>
+                <li><a href="/ui/data/datatable/facets.xhtml">🏷️ Facets</a></li>
+                <li><a href="/ui/data/datatable/paginator.xhtml" class="active">📄 Paginator</a></li>
+                <li><a href="/ui/data/datatable/sort.xhtml">🔀 Sort</a></li>
+                <li><a href="/ui/data/datatable/filter.xhtml">🔍 Filter</a></li>
+                <li><a href="/ui/data/datatable/selection.xhtml">☑️ Selection</a></li>
+                <li><a href="/ui/data/datatable/size.xhtml">📏 Size</a></li>
+                <li><a href="/ui/data/datatable/gridlines.xhtml">▦ Gridlines</a></li>
+                <li><a href="/ui/data/datatable/striped.xhtml">🦓 Striped</a></li>
+                <li><a href="/ui/data/datatable/responsive.xhtml">📱 Responsive</a></li>
+                <li><a href="/ui/data/datatable/edit.xhtml">✏️ Edit</a></li>
+                <li><a href="/ui/data/datatable/crud.xhtml">⚡ CRUD</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="/index.xhtml">Home</a> <span>/</span>
+                <span>Data</span> <span>/</span>
+                <span>DataTable</span> <span>/</span>
+                <strong>Paginator</strong>
+            </div>
+
+            <div class="page-header">
+                <h1>DataTable <span class="subitem">Paginator</span></h1>
+                <p>DataTable has built-in pagination support with configurable rows per page and navigation controls.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>Products with Paginator (5 rows per page)</span>
+                    <span style="font-size: 0.85rem; color: #64748b;">Bean: <code>#{dtPaginatorView.products}</code></span>
+                </div>
+
+                <h:form id="form">
+                    <p:dataTable var="product" value="#{dtPaginatorView.products}" rows="5" paginator="true">
+                        <p:column headerText="Code">
+                            <h:outputText value="#{product.code}" />
+                        </p:column>
+
+                        <p:column headerText="Name">
+                            <h:outputText value="#{product.name}" />
+                        </p:column>
+
+                        <p:column headerText="Category">
+                            <h:outputText value="#{product.category}" />
+                        </p:column>
+
+                        <p:column headerText="Quantity">
+                            <h:outputText value="#{product.quantity}" />
+                        </p:column>
+
+                        <p:column headerText="Price">
+                            <h:outputText value="$#{product.price}" />
+                        </p:column>
+
+                        <p:column headerText="Status">
+                            <p:tag severity="#{product.inventoryStatus.severity}" value="#{product.inventoryStatus.text}" rounded="true" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>Source Code</span>
+                </div>
+                <pre class="code-preview">&lt;p:dataTable var="product" value="\#{dtPaginatorView.products}" rows="5" paginator="true"&gt;
+    &lt;p:column headerText="Code"&gt;
+        &lt;h:outputText value="\#{product.code}" /&gt;
+    &lt;/p:column&gt;
+    &lt;p:column headerText="Name"&gt;
+        &lt;h:outputText value="\#{product.name}" /&gt;
+    &lt;/p:column&gt;
+    &lt;p:column headerText="Category"&gt;
+        &lt;h:outputText value="\#{product.category}" /&gt;
+    &lt;/p:column&gt;
+    &lt;p:column headerText="Quantity"&gt;
+        &lt;h:outputText value="\#{product.quantity}" /&gt;
+    &lt;/p:column&gt;
+&lt;/p:dataTable&gt;</pre>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

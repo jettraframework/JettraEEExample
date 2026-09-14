@@ -1,0 +1,5 @@
+/* Test static css resource for Jakarta EE Document Root */
+.test-style {
+    color: #0f766e;
+    font-weight: bold;
+}

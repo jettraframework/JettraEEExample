@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<head>
+    <meta charset="UTF-8" />
+    <title>JettraEE Example - Portal de Inicio</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1f2937;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 35px 40px;
+        }
+        h1 {
+            color: #0f766e;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .badge {
+            background: #ccfbf1;
+            color: #0f766e;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+        p.subtitle {
+            color: #4b5563;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafafa;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #111827;
+        }
+        .card p {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .card a.btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: #0f766e;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .card a.btn:hover {
+            background: #115e59;
+        }
+        .footer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            color: #9ca3af;
+            font-size: 13px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JettraEE Example <span class="badge">Java 25 Loom</span></h1>
+        <p class="subtitle">Demostración integral de <strong>Jakarta EE 11/12</strong>, <strong>Eclipse MicroProfile</strong>, interfaces con <strong>Jakarta Faces</strong> y <strong>JettraFlux</strong>.</p>
+
+        <div class="grid">
+            <!-- PrimeFaces Showcase -->
+            <div class="card" style="border: 2px solid #6366f1; background: #faf5ff; grid-column: 1 / -1;">
+                <h3 style="color: #4f46e5; margin-bottom: 8px;">🌟 PrimeFaces Showcase - DataTable Collection</h3>
+                <p style="margin-bottom: 15px;">Implementación completa de todos los ejemplos oficiales de <strong>PrimeFaces DataTable</strong> impulsados por <strong>JettraEE</strong> con Virtual Threads.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <a href="/ui/data/datatable/basic.xhtml" class="btn" style="background: #4f46e5;">📌 Basic</a>
+                    <a href="/ui/data/datatable/facets.xhtml" class="btn" style="background: #4f46e5;">🏷️ Facets</a>
+                    <a href="/ui/data/datatable/paginator.xhtml" class="btn" style="background: #4f46e5;">📄 Paginator</a>
+                    <a href="/ui/data/datatable/sort.xhtml" class="btn" style="background: #4f46e5;">🔀 Sort</a>
+                    <a href="/ui/data/datatable/filter.xhtml" class="btn" style="background: #4f46e5;">🔍 Filter</a>
+                    <a href="/ui/data/datatable/selection.xhtml" class="btn" style="background: #4f46e5;">☑️ Selection</a>
+                    <a href="/ui/data/datatable/size.xhtml" class="btn" style="background: #4f46e5;">📏 Size</a>
+                    <a href="/ui/data/datatable/gridlines.xhtml" class="btn" style="background: #4f46e5;">▦ Gridlines</a>
+                    <a href="/ui/data/datatable/striped.xhtml" class="btn" style="background: #4f46e5;">🦓 Striped</a>
+                    <a href="/ui/data/datatable/responsive.xhtml" class="btn" style="background: #4f46e5;">📱 Responsive</a>
+                    <a href="/ui/data/datatable/edit.xhtml" class="btn" style="background: #4f46e5;">✏️ Edit</a>
+                    <a href="/ui/data/datatable/crud.xhtml" class="btn" style="background: #10b981;">⚡ Full CRUD</a>
+                </div>
+            </div>
+
+            <!-- Jakarta Faces -->
+            <div class="card">
+                <h3>🎭 Jakarta Faces (Facelets)</h3>
+                <p>Interfaz dinámica basada en XHTML, etiquetas <code>&lt;h:form&gt;</code>, <code>&lt;h:dataTable&gt;</code> y beans CDI <code>@Named</code>.</p>
+                <a href="/productos.xhtml" class="btn">Abrir Jakarta Faces</a>
+            </div>
+
+            <!-- JettraFlux -->
+            <div class="card">
+                <h3>⚡ JettraFlux Reactivo</h3>
+                <p>Páginas web reactivas y widgets construidos con el motor moderno de JettraFlux nativo en JettraEE.</p>
+                <a href="/flux/dashboard" class="btn">Abrir JettraFlux Dashboard</a>
+            </div>
+
+            <!-- Swagger UI -->
+            <div class="card">
+                <h3>📖 MicroProfile OpenAPI</h3>
+                <p>Documentación interactiva Swagger UI con exploración de endpoints REST, esquemas y parámetros.</p>
+                <a href="/q/swagger-ui" class="btn">Abrir Swagger UI</a>
+            </div>
+
+            <!-- REST API -->
+            <div class="card">
+                <h3>🌐 Jakarta REST (JAX-RS)</h3>
+                <p>Endpoint REST JSON con validaciones Jakarta y motor de cálculo JettraRules.</p>
+                <a href="/api/productos" class="btn">Consultar /api/productos</a>
+            </div>
+
+            <!-- Health Checks -->
+            <div class="card">
+                <h3>🩺 MicroProfile Health</h3>
+                <p>Sondas de verificación <code>@Liveness</code> y <code>@Readiness</code> listas para Kubernetes y Docker.</p>
+                <a href="/q/health" class="btn">Ver /q/health</a>
+            </div>
+
+            <!-- Metrics -->
+            <div class="card">
+                <h3>📊 MicroProfile Metrics</h3>
+                <p>Exportador de métricas en formato Prometheus OpenMetrics y JSON para Grafana y dashboards.</p>
+                <a href="/q/metrics" class="btn">Ver /q/metrics</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            JettraEE Framework © 2026 • Servidor Ultra Ligero y Escalable
+        </div>
+    </div>
+</body>
+</html>

@@ -36,11 +36,12 @@
         <microprofile.restclient.version>3.0.1</microprofile.restclient.version>
         <microprofile.jwt.version>2.1</microprofile.jwt.version>
 
-        <jettra.json.version>1.0.0-SNAPSHOT</jettra.json.version>
-        <jettra.jwt.version>1.0.0-SNAPSHOT</jettra.jwt.version>
-        <jettra.rules.version>1.0.0-SNAPSHOT</jettra.rules.version>
+        <jettra.json.version>1.0.0</jettra.json.version>
+        <jettra.test.version>1.0.0</jettra.test.version>
+        <jettra.jwt.version>1.0.0</jettra.jwt.version>
+        <jettra.rules.version>1.0.0</jettra.rules.version>
         <jettra.flux.version>1.0.0-SNAPSHOT</jettra.flux.version>
-        <jettra.annotation.version>1.0.0-SNAPSHOT</jettra.annotation.version>
+        <jettra.annotation.version>1.0.0</jettra.annotation.version>
     </properties>
 
     <dependencies>
@@ -123,18 +124,19 @@
         </dependency>
 
         <!-- Jettra Stack Modules -->
+         <dependency>
+            <groupId>com.github.jettraframework</groupId>
+            <artifactId>JettraAnnotation</artifactId>
+            <version>${jettra.annotation.version}</version>
+        </dependency>
         <dependency>
-            <groupId>io.jettra</groupId>
+            <groupId>com.github.jettraframework</groupId>
             <artifactId>JettraJSON</artifactId>
             <version>${jettra.json.version}</version>
         </dependency>
-<!--        <dependency>
-            <groupId>io.jettra</groupId>
-            <artifactId>JettraJWT</artifactId>
-            <version>${jettra.jwt.version}</version>
-        </dependency>-->
+
         <dependency>
-            <groupId>io.jettra</groupId>
+              <groupId>com.github.jettraframework</groupId>
             <artifactId>JettraRules</artifactId>
             <version>${jettra.rules.version}</version>
         </dependency>
@@ -143,11 +145,7 @@
             <artifactId>JettraFlux</artifactId>
             <version>${jettra.flux.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.jettra</groupId>
-            <artifactId>JettraAnnotation</artifactId>
-            <version>${jettra.annotation.version}</version>
-        </dependency>
+       
 
         <!-- Testing -->
         <dependency>
@@ -157,21 +155,7 @@
             <scope>test</scope>
         </dependency>
         
-        
-        
-        
-<!-- Primefaces  <
-<dependency>
-    <groupId>org.primefaces</groupId>
-    <artifactId>primefaces</artifactId>
-    <version>17.0.0-SNAPSHOT</version>
-</dependency>
- Optional: PrimeFlex CSS utility 
-<dependency>
-    <groupId>org.webjars.npm</groupId>
-    <artifactId>primeflex</artifactId>
-    <version>4.0.0</version>
-</dependency>-->
+
     </dependencies>
 
     <build>

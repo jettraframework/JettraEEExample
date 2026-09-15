@@ -32,6 +32,11 @@ import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 public class App {
 
     public static void main(String[] args) {
+        if (args != null && args.length > 0 && ("shell".equalsIgnoreCase(args[0]) || "--shell".equalsIgnoreCase(args[0]))) {
+            io.jettra.ee.security.shell.JettraSecurityShell.main(java.util.Arrays.copyOfRange(args, 1, args.length));
+            return;
+        }
+
         IO.info("Iniciando JettraEEExample...");
 
         JettraEEServer server = JettraEE.start(App.class, args);
@@ -46,6 +51,7 @@ public class App {
         IO.success(" • API Jakarta REST:          http://localhost:" + server.getPort() + "/api/productos");
         IO.success(" • Login JWT (SecurityDB):    http://localhost:" + server.getPort() + "/api/auth/login");
         IO.success(" • Admin Usuarios (Security): http://localhost:" + server.getPort() + "/api/security/users");
+        IO.success(" • Shell SecurityDB (CLI):    java -jar <jar> shell (o mvn exec:java -Dexec.args=\"shell\")");
         IO.success(" • Swagger UI (OpenAPI):      http://localhost:" + server.getPort() + "/q/swagger-ui");
         IO.success(" • MicroProfile Health:       http://localhost:" + server.getPort() + "/q/health");
         IO.success(" • MicroProfile Metrics:      http://localhost:" + server.getPort() + "/q/metrics");

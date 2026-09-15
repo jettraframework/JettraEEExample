@@ -160,6 +160,11 @@ public class AppTest {
         assertEquals(200, resApi.statusCode());
         assertTrue(resApi.body().contains("\"openapi\":\"3.1.0\""));
         assertTrue(resApi.body().contains("/api/productos"));
+        assertTrue(resApi.body().contains("\"securitySchemes\""), "Debe contener components.securitySchemes");
+        assertTrue(resApi.body().contains("\"BearerAuth\""), "Debe contener el esquema BearerAuth");
+        assertTrue(resApi.body().contains("\"scheme\":\"bearer\""), "Debe especificar esquema bearer");
+        assertTrue(resApi.body().contains("\"bearerFormat\":\"JWT\""), "Debe especificar formato JWT");
+        assertTrue(resApi.body().contains("\"security\""), "Debe contener requerimientos de seguridad globales");
 
         HttpRequest reqUi = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + TEST_PORT + "/q/swagger-ui"))
@@ -168,6 +173,7 @@ public class AppTest {
         HttpResponse<String> resUi = client.send(reqUi, HttpResponse.BodyHandlers.ofString());
         assertEquals(200, resUi.statusCode());
         assertTrue(resUi.body().contains("Swagger UI"));
+        assertTrue(resUi.body().contains("persistAuthorization: true"));
     }
 
     @Test

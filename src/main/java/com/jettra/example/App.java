@@ -3,12 +3,32 @@ package com.jettra.example;
 import io.jettra.ee.JettraEE;
 import io.jettra.ee.core.IO;
 import io.jettra.ee.server.JettraEEServer;
+import org.eclipse.microprofile.openapi.annotations.OpenAPIDefinition;
+import org.eclipse.microprofile.openapi.annotations.enums.SecuritySchemeType;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
+import org.eclipse.microprofile.openapi.annotations.security.SecurityScheme;
 
 /**
  * Punto de entrada principal para JettraEEExample.
  * Inicia el servidor JettraEE con autodescubrimiento de Jakarta REST, CDI,
  * MicroProfile Health, OpenAPI, interfaces Jakarta Faces y JettraFlux.
  */
+@OpenAPIDefinition(
+        info = @Info(
+                title = "JettraEE Example API",
+                version = "1.0.0",
+                description = "Documentación interactiva OpenAPI 3.1 con autenticación JWT Bearer para JettraEEExample"
+        ),
+        security = @SecurityRequirement(name = "BearerAuth")
+)
+@SecurityScheme(
+        securitySchemeName = "BearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT",
+        description = "Introduzca su token JWT (Bearer Token) para autorizar el acceso"
+)
 public class App {
 
     public static void main(String[] args) {

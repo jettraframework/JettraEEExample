@@ -44,6 +44,8 @@ public class App {
         IO.success(" • Interfaz JettraFlux:       http://localhost:" + server.getPort() + "/flux/dashboard");
         IO.success(" • Catálogo JettraFlux:       http://localhost:" + server.getPort() + "/flux/catalogo");
         IO.success(" • API Jakarta REST:          http://localhost:" + server.getPort() + "/api/productos");
+        IO.success(" • Login JWT (SecurityDB):    http://localhost:" + server.getPort() + "/api/auth/login");
+        IO.success(" • Admin Usuarios (Security): http://localhost:" + server.getPort() + "/api/security/users");
         IO.success(" • Swagger UI (OpenAPI):      http://localhost:" + server.getPort() + "/q/swagger-ui");
         IO.success(" • MicroProfile Health:       http://localhost:" + server.getPort() + "/q/health");
         IO.success(" • MicroProfile Metrics:      http://localhost:" + server.getPort() + "/q/metrics");

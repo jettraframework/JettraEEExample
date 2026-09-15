@@ -29,6 +29,7 @@ public class ProductoResource {
     private ProductoService productoService;
 
     @GET
+    @jakarta.annotation.security.PermitAll
     @Operation(summary = "Listar todos los productos", description = "Retorna la colección completa de productos disponibles")
     @APIResponse(responseCode = "200", description = "Productos listados exitosamente")
     public Response listar() {
@@ -38,6 +39,7 @@ public class ProductoResource {
 
     @GET
     @Path("/{id}")
+    @jakarta.annotation.security.PermitAll
     @Operation(summary = "Buscar producto por ID", description = "Retorna un producto según su identificador único")
     @APIResponse(responseCode = "200", description = "Producto encontrado")
     @APIResponse(responseCode = "404", description = "Producto no encontrado")
@@ -48,8 +50,11 @@ public class ProductoResource {
     }
 
     @POST
-    @Operation(summary = "Crear o actualizar producto", description = "Valida el producto y lo guarda en el catálogo")
+    @jakarta.annotation.security.RolesAllowed("ADMIN")
+    @Operation(summary = "Crear o actualizar producto", description = "Requiere rol ADMIN. Valida el producto y lo guarda en el catálogo")
     @APIResponse(responseCode = "201", description = "Producto creado")
+    @APIResponse(responseCode = "401", description = "No autenticado")
+    @APIResponse(responseCode = "403", description = "Acceso denegado (Requiere rol ADMIN)")
     @APIResponse(responseCode = "400", description = "Validación fallida")
     public Response crear(@Valid Producto producto) {
         Producto guardado = productoService.guardar(producto);
@@ -58,8 +63,11 @@ public class ProductoResource {
 
     @DELETE
     @Path("/{id}")
-    @Operation(summary = "Eliminar producto por ID")
+    @jakarta.annotation.security.RolesAllowed("ADMIN")
+    @Operation(summary = "Eliminar producto por ID", description = "Requiere rol ADMIN.")
     @APIResponse(responseCode = "200", description = "Producto eliminado")
+    @APIResponse(responseCode = "401", description = "No autenticado")
+    @APIResponse(responseCode = "403", description = "Acceso denegado (Requiere rol ADMIN)")
     @APIResponse(responseCode = "404", description = "Producto no encontrado")
     public Response eliminar(@PathParam("id") String id) {
         boolean ok = productoService.eliminar(id);
@@ -71,6 +79,7 @@ public class ProductoResource {
 
     @GET
     @Path("/sincronizar")
+    @jakarta.annotation.security.PermitAll
     @Operation(summary = "Sincronizar inventario", description = "Ejecuta sincronización con MicroProfile Fault Tolerance")
     public Response sincronizar() {
         String resultado = productoService.sincronizarConInventarioCentral();

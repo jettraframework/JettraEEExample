@@ -357,6 +357,70 @@ public class AppTest {
         assertEquals("annotated", io.jettra.ee.jakarta.cdi.JettraCDIContainer.getBeanDiscoveryMode(),
                 "beans.xml debe haber configurado bean-discovery-mode='annotated'");
     }
+
+    @Test
+    public void testJettraSecurityDBLoginAndJwtAuth() throws Exception {
+        // 1. Intentar acceder a endpoint protegido sin token -> 401
+        String nuevoProdJson = "{\"id\":\"PROD-SEC-99\",\"nombre\":\"Teclado Mecánico RGB\",\"categoria\":\"Periféricos\",\"precio\":120.0,\"stock\":15}";
+        HttpRequest postSinToken = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + TEST_PORT + "/api/productos"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(nuevoProdJson))
+                .build();
+        HttpResponse<String> resSinToken = client.send(postSinToken, HttpResponse.BodyHandlers.ofString());
+        assertEquals(401, resSinToken.statusCode(), "La creación de producto sin token debe fallar con 401");
+
+        // 2. Autenticarse contra JettraSecurityDB en /api/auth/login
+        String loginBody = "{\"username\":\"admin\",\"password\":\"admin\"}";
+        HttpRequest loginReq = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + TEST_PORT + "/api/auth/login"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(loginBody))
+                .build();
+        HttpResponse<String> loginRes = client.send(loginReq, HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, loginRes.statusCode(), "El login de admin debe ser 200");
+        assertTrue(loginRes.body().contains("Bearer "), "Debe retornar un token Bearer");
+        assertTrue(loginRes.body().contains("ADMIN"), "Debe tener rol ADMIN");
+
+        // Extraer token
+        String bodyStr = loginRes.body();
+        int tokenIdx = bodyStr.indexOf("\"token\":\"");
+        assertTrue(tokenIdx != -1);
+        int start = tokenIdx + 9;
+        int end = bodyStr.indexOf("\"", start);
+        String bearerToken = bodyStr.substring(start, end);
+
+        // 3. Probar /api/auth/me con el token
+        HttpRequest meReq = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + TEST_PORT + "/api/auth/me"))
+                .header("Authorization", bearerToken)
+                .GET()
+                .build();
+        HttpResponse<String> meRes = client.send(meReq, HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, meRes.statusCode());
+        assertTrue(meRes.body().contains("\"username\":\"admin\""));
+
+        // 4. Invocar endpoint protegido con rol ADMIN usando el token
+        HttpRequest postConToken = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + TEST_PORT + "/api/productos"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", bearerToken)
+                .POST(HttpRequest.BodyPublishers.ofString(nuevoProdJson))
+                .build();
+        HttpResponse<String> resConToken = client.send(postConToken, HttpResponse.BodyHandlers.ofString());
+        assertEquals(201, resConToken.statusCode(), "La creación con token ADMIN debe ser exitosa (201)");
+        assertTrue(resConToken.body().contains("Teclado Mecánico RGB"));
+
+        // 5. Administrar usuarios en /api/security/users
+        HttpRequest usersReq = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + TEST_PORT + "/api/security/users"))
+                .header("Authorization", bearerToken)
+                .GET()
+                .build();
+        HttpResponse<String> usersRes = client.send(usersReq, HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, usersRes.statusCode(), "Listar usuarios con token ADMIN debe ser 200");
+        assertTrue(usersRes.body().contains("\"username\":\"admin\""));
+    }
 }
 
 
